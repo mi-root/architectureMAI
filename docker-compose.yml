@@ -1,0 +1,34 @@
+networks:
+  composition_network:
+    external: true
+
+services:
+  composition-app:
+    container_name: composition-app
+    build:
+      context: ./composition
+      dockerfile: /Dockerfile
+    ports:
+      - "60000:8000"
+    networks:
+      - composition_network
+
+  score-app:
+    container_name: score-app
+    build:
+      context: ./score
+      dockerfile: /Dockerfile
+    ports:
+      - "55000:8000"
+    networks:
+      - composition_network
+
+  auth-app:
+    container_name: auth-app
+    build:
+      context: ./auth
+      dockerfile: Dockerfile
+    ports:
+      - "56000:8000"
+    networks:
+      - composition_network
