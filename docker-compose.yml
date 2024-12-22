@@ -4,7 +4,16 @@ networks:
 
 services:
   composition-app:
-    container_name: composition-app
+    build:
+      context: ./composition
+      dockerfile: /Dockerfile
+    networks:
+      - composition_network
+    deploy:
+      replicas: 5
+
+  composition-app-default:
+    container_name: composition-app-default
     build:
       context: ./composition
       dockerfile: /Dockerfile
@@ -30,5 +39,14 @@ services:
       dockerfile: Dockerfile
     ports:
       - "50053:50051"
+    networks:
+      - composition_network
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
     networks:
       - composition_network
