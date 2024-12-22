@@ -12,16 +12,6 @@ services:
     deploy:
       replicas: 5
 
-  composition-app-default:
-    container_name: composition-app-default
-    build:
-      context: ./composition
-      dockerfile: /Dockerfile
-    ports:
-      - "60000:8000"
-    networks:
-      - composition_network
-
   score-app:
     container_name: score-app
     build:
