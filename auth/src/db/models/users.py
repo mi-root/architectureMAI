@@ -1,4 +1,4 @@
-from sqlmodel import Field, SQLModel, Session
+from sqlmodel import Field, Session, SQLModel
 
 from src.db.base import engine
 from src.utils.password import generate_hashed_password

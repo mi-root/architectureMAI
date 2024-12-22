@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+
+service Scoring {
+    rpc Score (ScoreRequest) returns (ScoreResponse);
+}
+
+message ScoreRequest {
+    string login = 1;
+}
+
+message ScoreResponse {
+    float score = 1;
+}

@@ -18,12 +18,12 @@ class LoginResponse(BaseModel):
 
 
 @router.post("/")
-async def auth(login_request: LoginRequest) -> LoginResponse:
+async def login(login_request: LoginRequest) -> LoginResponse:
     try:
         score = await score_client.get_score(login_request.login)
         if score < settings.score_threshold:
             return LoginResponse(ok=False)
-    except HTTPException as exc:
+    except Exception as exc:
         pass
 
     try:

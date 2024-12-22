@@ -1,21 +1,11 @@
-import aiohttp
-from fastapi import HTTPException
-
+import grpc
+from src.pb.auth.auth_pb2 import AuthenticateRequest
+from src.pb.auth.auth_pb2_grpc import AuthStub
 from src.config.base import settings
 
 
 async def authenticate(login: str, password: str) -> bool:
-    async with aiohttp.ClientSession(settings.auth_url) as session:
-        try:
-            async with session.post(
-                "/authenticate", json={"login": login, "password": password}
-            ) as response:
-                if response.status != 200:
-                    detail = await response.text()
-                    raise HTTPException(status_code=response.status, detail=detail)
-
-                data = await response.json()
-                access_allowed = data["allowed_access"]
-        except aiohttp.ClientError as exc:
-            raise HTTPException(status_code=500, detail=f"Failed auth request: {exc}")
-    return access_allowed
+    channel = grpc.insecure_channel(settings.auth_url)
+    client = AuthStub(channel)
+    request = AuthenticateRequest(login=login, password=password)
+    return client.Authenticate(request).allowed_access

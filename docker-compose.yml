@@ -19,7 +19,7 @@ services:
       context: ./score
       dockerfile: /Dockerfile
     ports:
-      - "55000:8000"
+      - "50052:50051"
     networks:
       - composition_network
 
@@ -29,6 +29,6 @@ services:
       context: ./auth
       dockerfile: Dockerfile
     ports:
-      - "56000:8000"
+      - "50053:50051"
     networks:
       - composition_network

@@ -2,6 +2,7 @@ FROM python:3.12
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
+ENV PYTHONPATH="${PYTHONPATH}:/root/app"
 
 WORKDIR /root/app
 
@@ -15,4 +16,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . /root/app
 
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+EXPOSE 50051
+CMD ["python", "app/main.py"]
